@@ -191,6 +191,62 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
+        public void ModalDisplaysCorrectContentWhenUsingModalParametersGeneric()
+        {
+            const string testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+
+            var parameters = new ModalParameters<TestComponent>
+            {
+                { component => component.Title, testTitle }
+            };
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show("", parameters);
+
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
+        public void ModalDisplaysCorrectContentWhenUsingModalParametersGeneric2()
+        {
+            const string testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            ModalParameters<TestComponent> parameters = new() { { component => component.Title, testTitle } };
+            modalService.Show("", parameters, null);
+
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
+        public void ModalDisplaysCorrectContentWhenUsingModalParametersGeneric3()
+        {
+            const string testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+
+            var parameters = new ModalParameters<TestComponent>().Add(c => c.Title, testTitle);
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show("", parameters);
+
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
         public void ModalDisplaysCustomStyleWithScrollableContent()
         {
             // Arrange

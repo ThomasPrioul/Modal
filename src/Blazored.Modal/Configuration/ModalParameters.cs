@@ -2,23 +2,11 @@
 
 namespace Blazored.Modal
 {
-    public class ModalParameters
+    public class ModalParameters : Dictionary<string, object>
     {
-        internal Dictionary<string, object> _parameters;
-
-        public ModalParameters()
-        {
-            _parameters = new Dictionary<string, object>();
-        }
-
-        public void Add(string parameterName, object value)
-        {
-            _parameters[parameterName] = value;
-        }
-
         public T Get<T>(string parameterName)
         {
-            if (_parameters.TryGetValue(parameterName, out var value))
+            if (TryGetValue(parameterName, out var value))
             {
                 return (T)value;
             }
@@ -28,7 +16,7 @@ namespace Blazored.Modal
 
         public T TryGet<T>(string parameterName)
         {
-            if (_parameters.TryGetValue(parameterName, out var value))
+            if (TryGetValue(parameterName, out var value))
             {
                 return (T)value;
             }
