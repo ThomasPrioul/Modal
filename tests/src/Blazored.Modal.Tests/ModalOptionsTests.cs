@@ -247,6 +247,22 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
+        public void ModalDisplaysCorrectContentWhenUsingModalParametersGeneric4()
+        {
+            const string testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", new() { { c => c.Title, testTitle } }, null);
+
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
         public void ModalDisplaysCustomStyleWithScrollableContent()
         {
             // Arrange
